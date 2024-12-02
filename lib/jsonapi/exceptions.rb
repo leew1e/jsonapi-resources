@@ -509,7 +509,8 @@ module JSONAPI
       end
 
       def detail(attr_key, message)
-        general_error?(attr_key) ? message : "#{format_key(attr_key)} - #{message}"
+        humanized_key = resource_class.human_attribute_name(attr_key)
+        general_error?(attr_key) ? message : "#{humanized_key} - #{message}"
       end
 
       def pointer(attr_or_relationship_name)
