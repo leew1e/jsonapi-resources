@@ -509,8 +509,12 @@ module JSONAPI
       end
 
       def detail(attr_key, message)
-        humanized_key = resource_class.human_attribute_name(attr_key)
-        general_error?(attr_key) ? message : "#{humanized_key} - #{message}"
+        if general_error?(attr_key)
+          message
+        else
+          humanized_key = resource_class._model_class.human_attribute_name(attr_key)
+          "#{humanized_key} - #{message}"
+        end
       end
 
       def pointer(attr_or_relationship_name)
